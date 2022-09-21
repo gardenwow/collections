@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -15,33 +17,34 @@ public class EmployeeService {
             new Employee("Вася", "Пупкин")
     ));
 
-    public void addEmployee(Employee employee) {
-        if (findEmpl(employee) == true) {
-            throw new EmployeeAlreadyAddedException("не возможно добавить сотрудника т.к он уже есть");
-        } else employees.add(employee);
-    }
-
-    public void deleteEmployee(Employee employee) {
-        if (findEmpl(employee) == false) {
-           throw new EmployeeAlreadyAddedException("такого сотрудника нет");
-        } else {
-            employees.remove(employee);
+    public Employee addEmployee(String firstName, String lastName) {
+        Employee employee = new Employee(firstName, lastName);
+        if (employees.contains(employee)){
+            throw new EmployeeAlreadyAddedException();
         }
-    }
-
-    public Employee findEmployee(Employee employee) {
-        if (findEmpl(employee) == true) {
-            throw new EmployeeNotFoundException("такой сутрудник уже есть");
-        }
+        employees.add(employee);
         return employee;
     }
 
-    public boolean findEmpl(Employee employee) {
-        for (Employee empls : employees) {
-            if (employee.equals(empls)) {
-                return true;
-            }
+    public Employee deleteEmployee(String firstName, String lastName) {
+        Employee employee = new Employee(firstName, lastName);
+        if (employees.contains(employee)){
+            employees.remove(employee);
+            return employee;
         }
-        return false;
+        throw new EmployeeNotFoundException();
+    }
+
+    public Employee findEmployee(String firstName, String lastName) {
+        Employee employee = new Employee(firstName, lastName);
+        if (employees.contains(employee)){
+            return employee;
+        }
+        throw new EmployeeNotFoundException();
+    }
+
+
+    public Collection<Employee> findAll() {
+        return Collections.unmodifiableList(employees) ;
     }
 }

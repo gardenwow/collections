@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/employee")
@@ -22,32 +22,38 @@ public class ControllerEmployee {
     }
 
     @GetMapping(path = "/add")
-    public Employee addEmployee(@RequestParam(name = "firstname") String firstName,
+    public Object addEmployee(@RequestParam(name = "firstname") String firstName,
                                 @RequestParam(name = "lastname") String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        employeeService.addEmployee(employee);
-        return employee;
+        try{
+            return employeeService.addEmployee(firstName,lastName);
+        }catch (EmployeeAlreadyAddedException e){
+            return "такой сотрудник уже есть";
+        }
     }
 
     @GetMapping(path = "/delete")
-    public Employee deleteEmployee(@RequestParam(name = "firstname") String firstName,
-                                   @RequestParam(name = "lastname") String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        employeeService.deleteEmployee(employee);
-        return employee;
+    public Object deleteEmployee(@RequestParam(name = "firstname") String firstName,
+                                 @RequestParam(name = "lastname") String lastName) {
+        try{
+            return employeeService.deleteEmployee(firstName, lastName);
+        }catch (EmployeeNotFoundException e){
+
+        }
+            return "сотрудник не найден";
     }
 
     @GetMapping(path = "/find")
-    public Employee findEmployee(@RequestParam(name = "firstname") String firstName,
+    public Object findEmployee(@RequestParam(name = "firstname") String firstName,
                                  @RequestParam(name = "lastname") String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        employeeService.findEmployee(employee);
-
-        return employee;
+       try{
+           return employeeService.findEmployee(firstName,lastName);
+       }catch (EmployeeNotFoundException e){
+           return "акой сотрудник не найден";
+       }
     }
 
     @GetMapping(path = "/allview")
-    public ArrayList<Employee> allView() {
-        return employeeService.employees;
+    public Collection<Employee> allView() {
+        return employeeService.findAll();
     }
 }
