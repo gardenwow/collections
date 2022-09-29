@@ -5,7 +5,23 @@ import java.util.Objects;
 public class Employee {
     private String firstName;
     private String lastName;
+    private Double salary;
+    private Integer department;
 
+    public Double getSalary() {
+        return salary;
+    }
+
+    public Integer getDepartment() {
+        return department;
+    }
+
+    public Employee(String firstName, String lastName, Double salary, Integer department) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.salary = salary;
+        this.department = department;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -15,12 +31,6 @@ public class Employee {
         return lastName;
     }
 
-    public Employee(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-
-
-    }
 
     @Override
     public String toString() {
@@ -33,11 +43,11 @@ public class Employee {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Employee employee)) return false;
-        return Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName);
+        return Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(salary, employee.salary) && Objects.equals(department, employee.department);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName);
+        return Objects.hash(firstName, lastName, salary, department);
     }
 }
