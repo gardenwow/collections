@@ -1,10 +1,9 @@
 package com.exampleskypro.collections;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class EmployeeService {
@@ -17,6 +16,9 @@ public class EmployeeService {
     ));
 
     public Employee addEmployee(String firstName, String lastName, Double salary, Integer department) {
+        if (!searchUnicod(firstName, lastName)){
+            throw new BadExep();
+        }
         Employee employee = new Employee(firstName, lastName, salary, department);
         if (employees.contains(employee)){
             throw new EmployeeAlreadyAddedException();
@@ -26,6 +28,9 @@ public class EmployeeService {
     }
 
     public Employee deleteEmployee(String firstName, String lastName, Double salary, Integer department) {
+        if (!searchUnicod(firstName, lastName)){
+            throw new BadExep();
+        }
         Employee employee = new Employee(firstName, lastName, salary, department);
         if (employees.contains(employee)){
             employees.remove(employee);
@@ -35,6 +40,9 @@ public class EmployeeService {
     }
 
     public Employee findEmployee(String firstName, String lastName, Double salary, Integer department) {
+        if (!searchUnicod(firstName, lastName)){
+            throw new BadExep();
+        }
         Employee employee = new Employee(firstName, lastName, salary, department);
         if (employees.contains(employee)){
             return employee;
@@ -45,6 +53,9 @@ public class EmployeeService {
 
     public Collection<Employee> findAll() {
         return Collections.unmodifiableList(employees) ;
+    }
+    private boolean searchUnicod(String firstName, String lastName){
+        return StringUtils.isAlpha(firstName) && StringUtils.isAlpha(lastName);
     }
 
 }

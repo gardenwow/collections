@@ -28,7 +28,7 @@ public class DepartmentService {
 
     public Employee minSalary(Integer dep) {
         return employeeService.employees.stream().filter(employee -> employee.getDepartment().equals(dep))
-                .min(Comparator.comparing(Employee::getSalary))
+                .min(Comparator.comparing(el -> el.getSalary()))
                 .orElseThrow(EmployeeNotFoundException::new);
     }
 
@@ -37,9 +37,9 @@ public class DepartmentService {
                 .collect(toList());
     }
 
-    public Map<Integer, List<Employee>> sortDepartment(Integer dep) {
+    public Map<Integer, List<Employee>> sortDepartment() {
         Map< Integer,List<Employee>> tempEmplList = employeeService.employees.stream()
-                .collect(Collectors.groupingBy(Employee::getDepartment));
+                .collect(Collectors.groupingBy(el -> el.getDepartment()));
         return tempEmplList;
     }
 }
