@@ -8,12 +8,13 @@ import java.util.*;
 @Service
 public class EmployeeService {
     List<Employee> employees = new ArrayList<>(List.of(
-            new Employee("Lex", "Luter", 54000.0, 2),
-            new Employee("Alex", "Manson", 65000.2, 1),
-            new Employee("Leonardo", "DeLaKrus",10054.2, 1),
-            new Employee("Вася", "Пупкин", 20001.0, 1),
-            new Employee("Вася1", "Пупкин2", 200021.0, 2)
+            new Employee("Ivan", "Petrov", 10001.0, 1),
+            new Employee("Oleg", "Krot", 10002.0, 3),
+            new Employee("Mariya", "Kostrova", 20003.0, 3),
+            new Employee("Nikolai", "Harlamov", 10004.0, 2),
+            new Employee("Sergei", "Melden", 10001.0, 2)
     ));
+
 
     public Employee addEmployee(String firstName, String lastName, Double salary, Integer department) {
         if (!searchUnicod(firstName, lastName)){
@@ -52,7 +53,7 @@ public class EmployeeService {
 
 
     public Collection<Employee> findAll() {
-        return Collections.unmodifiableList(employees) ;
+        return employees;
     }
     private boolean searchUnicod(String firstName, String lastName){
         return StringUtils.isAlpha(firstName) && StringUtils.isAlpha(lastName);
