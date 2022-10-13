@@ -17,11 +17,11 @@ public class EmployeeService {
 
 
     public Employee addEmployee(String firstName, String lastName, Double salary, Integer department) {
-        if (!searchUnicod(firstName, lastName)){
+        if (!searchUnicod(firstName, lastName)) {
             throw new BadExep();
         }
         Employee employee = new Employee(firstName, lastName, salary, department);
-        if (employees.contains(employee)){
+        if (employees.contains(employee)) {
             throw new EmployeeAlreadyAddedException();
         }
         employees.add(employee);
@@ -29,11 +29,11 @@ public class EmployeeService {
     }
 
     public Employee deleteEmployee(String firstName, String lastName, Double salary, Integer department) {
-        if (!searchUnicod(firstName, lastName)){
+        if (!searchUnicod(firstName, lastName)) {
             throw new BadExep();
         }
         Employee employee = new Employee(firstName, lastName, salary, department);
-        if (employees.contains(employee)){
+        if (employees.contains(employee)) {
             employees.remove(employee);
             return employee;
         }
@@ -41,11 +41,11 @@ public class EmployeeService {
     }
 
     public Employee findEmployee(String firstName, String lastName, Double salary, Integer department) {
-        if (!searchUnicod(firstName, lastName)){
+        if (!searchUnicod(firstName, lastName)) {
             throw new BadExep();
         }
         Employee employee = new Employee(firstName, lastName, salary, department);
-        if (employees.contains(employee)){
+        if (employees.contains(employee)) {
             return employee;
         }
         throw new EmployeeNotFoundException();
@@ -53,9 +53,10 @@ public class EmployeeService {
 
 
     public Collection<Employee> findAll() {
-        return employees;
+        return new ArrayList<>(employees);
     }
-    private boolean searchUnicod(String firstName, String lastName){
+
+    private boolean searchUnicod(String firstName, String lastName) {
         return StringUtils.isAlpha(firstName) && StringUtils.isAlpha(lastName);
     }
 
